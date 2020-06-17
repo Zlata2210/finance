@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+
+      <link href="/css/Diplom1.css" type="text/css" rel="stylesheet">
+    <title><%=title%></title>
+  </head>
+  <body>
+<div class="content">
+
+        <div class="menu">
+          <%=name%>
+          <p>
+            <ul>
+            <li>
+          <div class="menu-home">
+          <a href="/userPage?id=<%=user_mas.id%>">  <img src="css/img/home.png" alt="" width="20px"> Главная </a>
+          </div>
+        </li>
+        <li>
+          <div class="menu-family">
+          <a href="/userPage?id=<%=user_mas.id%>&family">  <img src="css/img/fam.png" alt="" width="20px"> Семейный доступ </a>
+          </div>
+            </li>
+            <li>
+            <ul class="family">
+              <li><a href="/userPage?id=<%=user_mas.id%>&finance"> Переводы </a> </li>
+            </ul>
+            </li>
+            <li>
+            <ul class="family">
+              <li><a href="/userPage?id=<%=user_mas.id%>&familytranzaction"> Список транзакций </a> </li>
+            </ul>
+            </li>
+        <li>
+          <div class="menu-pay">
+          <a href="/userPage?id=<%=user_mas.id%>&pay">  <img src="css/img/pay.png" alt="" width="20px"> Платежи </a>
+          </div>
+        </li>
+        <li>
+        <ul class="family">
+          <li><a href="/userPage?id=<%=user_mas.id%>&tranzaction"> Список транзакций </a> </li>
+        </ul>
+        </li>
+        <li>
+          <div class="menu-money">
+          <a href="/userPage?id=<%=user_mas.id%>&money">  <img src="css/img/money.png" alt="" width="20px"> Долги </a>
+          </div>
+        </li>
+        <li>
+        <ul class="debt">
+          <li><a href="/userPage?id=<%=user_mas.id%>&debt"> Добавить задолженность </a> </li>
+        </ul>
+        </li>
+        <li>
+        <ul class="debt">
+          <li><a href="/userPage?id=<%=user_mas.id%>&debttranzaction"> История платежей </a> </li>
+        </ul>
+        </li>
+        <li>
+          <div class="menu-setting">
+          <a href="/userPage?id=<%=user_mas.id%>&setting">  <img src="css/img/sett.png" alt="" width="20px"> Настройки </a>
+          </div>
+        </li>
+      </ul>
+
+          <!--  ДЛЯ КАТЕГОРИИ БУДЕТ
+           <a class="semi-transparent-button" href="#"><%=name%></a>
+            <% if (role == "admin") { %>
+              <% if(!under_name){  }
+              else{
+             under_name.forEach(function(ar) { %>
+                <a class="semi-transparent-button" href="/userPage?id=<%=ar.id%>"><%=ar.name.slice(0,2)%></a> <p>
+                  <a class="semi-transparent-button" href="/userPage?id=<%=ar.id%>&id2=<%=ar.role_id%>"><%=ar.name.slice(0,2) + name%></a> <p>
+              <% })
+            }%>
+             <form method="post" action="/familyAdd" novalidate>
+               <button class="semi-transparent-button" type="submit">+</button>
+             </form>
+            <%}%> -->
+            <form method="post" action="/Exit" novalidate>
+              <input class="button" type="submit" value="Выйти">
+            </form>
+        </div>
+        <div class="content-center">
+<% if (title=="Family"){ %>
+<p class = "pCash">Семейный счет: <%=cashFamily%>
+
+    <% if (role == "admin") {
+      console.log(under_name)
+          if (!under_name||under_name==[]){%>
+            <form method="post" action="/familyAdd" novalidate>
+              <input class="semi-transparent-button" type="submit" value="Добавить">
+            </form>
+        <%  } else {%>
+          Семья:
+      <%  under_name.forEach(function(ar) { %>
+             <%=ar.name%>
+           <% })%>
+           <%}
+         %>
+         <!--<div class="fam"> Семья:
+         <% if(!under_name){  }
+         else{
+         under_name.forEach(function(ar) { %>
+         <a class="button-name" href="/userPage?id=<%=ar.id%>"><%=ar.name%></a>
+         <% })
+         }%> -->
+         <%} else {%>
+           Семья: <%=admin_name%>
+         <%}%>  </p>
+         <div class="FamilyClass">
+
+         <div class="ChartFamily">
+           <form class="CheckSortData" action="/CheckSortDataFamily" method="post">
+         C:<input type="date" class="example1" id="OneDate" name="example1" />
+         по:<input type="date" class="example1" id="TwoDate" name="example1" />
+           <button class="btnCheckData" type="submit">V</button>
+           <div id="between" value="<%=between%>"> </div>
+           <div id="and" value="<%=and%>"> </div>
+         <script type="text/javascript" src="/js/dateSort.js">  </script>
+
+        </form>
+           <%ChartFamily.forEach(function(ar) { %>
+
+                   <div class="diagramm1" title = "<%=ar.sum%>">  </div>
+             <%
+
+              })
+               Chart1Family.forEach(function(ar) {
+             if (ar!=undefined){
+             %>
+                   <div class="diagramm" title = "<%=ar.category%>">  </div>
+             <%
+           }
+              })
+           %>
+           <div class="chart_category">
+             Расходы
+             <div id="chart_div" style=""></div>
+           </div>
+           <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+               <script type="text/javascript" src="/js/chart.js">  </script>
+         </div>
+         <div class="ChartFamilyDeposit">
+
+           <%ChartFamilyDeposit.forEach(function(ar) { %>
+
+                   <div class="diagrammSum" title = "<%=ar.sum%>">  </div>
+             <%
+
+              })
+               Chart1FamilyDeposit.forEach(function(ar) {
+             if (ar!=undefined){
+             %>
+                   <div class="diagrammName" title = "<%=ar.name%>">  </div>
+             <%
+           }
+              })
+           %>
+           <div class="chart_category">
+             Денежный вклад
+             <div id="chart_divDeposit" style=""></div>
+           </div>
+           <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+               <script type="text/javascript" src="/js/chart.js">  </script>
+         </div>
+         <div class="ChartFamilyPay">
+         <%ChartFamilyPay.forEach(function(ar) { %>
+
+                 <div class="diagrammSumPay" title = "<%=ar.sum%>">  </div>
+           <%
+
+            })
+             Chart1FamilyPay.forEach(function(ar) {
+           if (ar!=undefined){
+           %>
+                 <div class="diagrammNamePay" title = "<%=ar.name%>">  </div>
+           <%
+         }
+            })
+         %>
+         <div class="chart_categoryPay">
+           Потрачено:
+           <div id="chart_divPay" style=""></div>
+         </div>
+         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+             <script type="text/javascript" src="/js/chart.js">  </script>
+       </div>
+       </div>
+
+
+
+        <% }if (title=="Home"){ %>
+
+        <div class="Home">
+
+          <div class="cash">
+               Баланc:  <input type="text" name="" value="<%=balance%>" id="bal" readonly>
+          <!--  <% if(balance=="0,00 ₽"){ %>  -->
+
+          <!--  <%}else {%>
+           <form method="post" action="/Balance" novalidate>
+              Баланс:  <input type="text" name="cash" value="<%=balance%>" id="bal">
+            </form>
+            <%}%>-->
+          </div>
+          <div class="analiz">
+
+             <form class="CheckSortData" action="/CheckSortData" method="post">
+           C:<input type="date" class="example1" id="OneDate" name="example1" />
+           по:<input type="date" class="example1" id="TwoDate" name="example1" />
+             <button class="btnCheckData" type="submit">V</button>
+             <div id="between" value="<%=between%>"> </div>
+             <div id="and" value="<%=and%>"> </div>
+           <script type="text/javascript" src="/js/dateSort.js">  </script>
+
+         </form>
+         <div class="Charts">
+
+           <%Chart.forEach(function(ar) {
+             if (ar!=undefined||ar!=null){
+             %>
+                   <div class="diagramm1" title = "<%=ar.sum%>">  </div>
+             <%
+           }
+              })
+               Chart1.forEach(function(ar) {
+             if (ar!=undefined){
+             %>
+                   <div class="diagramm" title = "<%=ar.category%>">  </div>
+             <%
+           }
+              })
+           %>
+           <div class="chart_Pay">
+             Расходы
+             <div id="chart_divPayHome" style=""></div>
+           </div>
+           <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+               <script type="text/javascript" src="/js/chart.js">  </script>
+
+
+              <%ChartFinance.forEach(function(ar) {%>
+
+                      <div class="diagramm1Fin" title = "<%=ar.sum%>">  </div>
+                <%
+                 })
+                  Chart1Finance.forEach(function(ar) {
+                if (ar!=undefined){
+                %>
+                      <div class="diagrammFin" title = "<%=ar.category%>">  </div>
+                <%
+              }
+                 })
+              %>
+              <div class="chart_Fin">
+                Доходы
+                <div id="chart_divFinance" style=""></div>
+              </div>
+              <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                  <script type="text/javascript" src="/js/chart.js">  </script>
+
+                  </div>
+
+          </div>
+        <%} if (title=="Pay"){
+          if (flagAlert) {%>
+            <script> alert("Недостаточно средств/Пополните баланс") </script>
+          <%}%>
+
+          <div class="Add">
+            Расходы
+          <form id="category" action="/AddTranzaction" method="post">
+            <div class="date">
+              Дата:
+                 <input type="date" class="example1" id="dates" name="example1" />
+                   <script type="text/javascript" src="/js/date.js">  </script>
+            </div>
+           <div class="category">
+             Категория:
+               <select class="example1" name="example1">
+                 <option name="" value="0" selected>Select</option>
+                 <% categories.forEach(function(ar) { %>
+                       <option value="<%=ar.category%>"><%=ar.category%></option>
+                   <% })%>
+                      <option value="Другое">Другое</option>
+                 </select>
+
+           </div>
+            <div class="pay">
+              Оплата:
+                  <select class="example1" name="example1">
+                    <option value="Наличные">Наличные</option>
+                    <option value="Безналичные">Безналичные</option>
+                  </select>
+            </div>
+            <div class="cash-add">
+              Кошелек:
+                  <select class="example1" name="example1">
+                    <option value="Family">Семейный бюджет</option>
+                    <option value="Self">Свои деньги</option>
+                  </select>
+            </div>
+             <div class="sum">
+               Сумма:  <input class="example1"  name="example1" value="" />
+             </div>
+                  <div class="form-actions">
+                        <button class="btn" type="submit">Добавить</button>
+                      </div>
+                </form>
+          </div>
+          <div class="Add-finance">
+            Доходы
+            <form id="show_Tranzaction" action="/AddFinance" method="post">
+              <div class="date">
+                Дата:
+                   <input type="date" class="example1" id="date" name="example1" placeholder="Дата" required>
+                   <script type="text/javascript" src="/js/date.js">  </script>
+              </div>
+              <div class="category">
+                Категория:
+                  <select class="example1" name="example1">
+                    <option name="" value="0" selected>Select</option>
+                    <% finance.forEach(function(ar) { %>
+                          <option value="<%=ar.category%>"><%=ar.category%></option>
+                      <% })%>
+                        <option value="Другое">Другое</option>
+                    </select>
+              </div>
+               <div class="pay">
+                 Доход:
+                     <select class="example1" name="example1">
+                       <option value="Наличные">Наличными</option>
+                       <option value="Безналичные">Безналичными</option>
+                     </select>
+               </div>
+               <div class="sum-btn">
+                <div class="sum">
+                  Сумма:  <input class="example1"  name="example1" value="" />
+                </div>
+                     <div class="form-actions">
+                           <button class="btn" type="submit">Добавить</button>
+                         </div>
+                         </div>
+                   </form>
+             </div>
+          </div>
+            <%} if (title=="Setting"){%>
+              <div class="setting">
+                <div class="editName">
+                  <form class="setting" action="/Setting" method="post">
+                    Имя: <input class="example1"  name="example1" value="<%=name%>" />
+
+                    <button type="submit" name="button" class="btn">Сохранить</button>
+                  </form>
+                </div>
+                <div class="editFamily">
+
+                  <form class="setting" action="/SettingFamily" method="post">
+Семья:
+                    <% if(!under_name){} else{
+                     under_name.forEach(function(ar) { %>
+                           <%=ar.name%>
+                           <input type="hidden" name="example1" value="<%=ar.id%>">
+                         <% })%>
+                         <button type="submit" name="button" class="btn">Удалить</button>
+                         <%}%>
+                  </form>
+                </div>
+
+              </div>
+              <%}
+              if (title=="Money"){%>
+                <%if (flagAlertDebt) {%>
+                  <script> alert("Недостаточно средств") </script>
+                <%}%>
+                <div class="DebtMoney">
+
+                  <% if (debt){ %>
+                    <form class="DebtSelect" action="/DebtSelect" method="post">
+                      <select class="example1" name="example1" id="name">
+                            <option value="pay">Погашенные</option>
+                            <option value="now">Текущие</option>
+                         </select>
+                         <button type="submit" name="button">V</button>
+                       </form>
+                         <div class="money">
+                           <%if (debtSelect=="now"){%>
+
+                             <table >
+                             <div class="debtDetail">
+                             <tr>
+                             <td>Наименование</td>
+                             <% debtDetail.forEach(function(ar) {
+                             if (ar.rest!=0){%>
+                             <td>   <input type="text" name="nameDebt" value="<%=ar.name%>" readonly> </td>
+                             <%}%>
+                             <% })%>
+
+                             </tr>
+                             <tr>
+                             <td>Категория</td>
+                             <% debtDetail.forEach(function(ar) {
+                             if (ar.rest!=0){%>
+
+                             <td>   <input type="text" name="nameDebt" value="<%=ar.category%>" readonly> </td>
+                             <%}%>
+                             <% })%>
+
+                             </tr>
+                             <tr>
+                             <td>Сумма:</td>
+                             <% debtDetail.forEach(function(ar) {
+                             if (ar.rest!=0){%>
+                             <td>    <input type="text"  placeholder="<%=ar.sum%>" readonly> </td>
+                             <%}%>
+                             <% })%>
+
+                             </tr>
+                             <tr>
+                             <td>Оплатить к:</td>
+                             <% debtDetail.forEach(function(ar) {
+                             if (ar.rest!=0){%>
+                             <td>     <input type="date" name="" value="<%=ar.dateend%>" id="dateMoney" readonly> </td>
+                             <%}%>
+                             <% })%>
+                             </tr>
+
+                             <tr>
+                             <td>Остаток:</td>
+                             <% debtDetail.forEach(function(ar) {
+                             if (ar.rest!=0){%>
+                             <td>   <input type="text"  placeholder="<%=ar.rest%>" readonly></td>
+                             <%}%>
+                             <% })%>
+
+                             </tr>
+
+                             <tr>
+                             <td>Платеж по:</td>
+
+                             <% debtDetail.forEach(function(ar) {
+                             if (ar.rest!=0){%>
+                             <td> <input type="text"   name="payment" value="<%=ar.payment%>" readonly></td>
+                             <%  }
+                             %>
+
+                             <% })%>
+
+
+                             </tr>
+
+
+                             </div>
+                             </table>
+                             <%} else if (debtSelect=="pay"){%>
+                               <table >
+                   <div class="debtDetail">
+                     <tr>
+                       <td>Наименование</td>
+                       <% debtDetail.forEach(function(ar) {
+           if (ar.rest==0){%>
+                           <td>   <input type="text" name="nameDebt" value="<%=ar.name%>" readonly> </td>
+                           <%}%>
+                     <% })%>
+
+           </tr>
+           <tr>
+             <td>Категория</td>
+             <% debtDetail.forEach(function(ar) {
+               if (ar.rest==0){%>
+
+                 <td>   <input type="text" name="nameDebt" value="<%=ar.category%>" readonly> </td>
+                 <%}%>
+           <% })%>
+
+           </tr>
+           <tr>
+             <td>Сумма:</td>
+               <% debtDetail.forEach(function(ar) {
+                 if (ar.rest==0){%>
+               <td>    <input type="text"  placeholder="<%=ar.sum%>" readonly> </td>
+               <%}%>
+             <% })%>
+
+           </tr>
+            <tr>
+             <td>Оплатить к:</td>
+             <% debtDetail.forEach(function(ar) {
+                 if (ar.rest==0){%>
+                   <td>     <input type="date" name="" value="<%=ar.dateend%>"  readonly> </td>
+           <%}%>
+             <% })%>
+
+           </tr>
+
+            <tr>
+             <td>Остаток:</td>
+             <% debtDetail.forEach(function(ar) {
+                 if (ar.rest==0){%>
+                 <td>   <input type="text"  placeholder="<%=ar.rest%>" readonly></td>
+           <%}%>
+             <% })%>
+
+           </tr>
+
+             <tr>
+               <td>Платеж по:</td>
+
+                     <% debtDetail.forEach(function(ar) {
+                           if (ar.rest==0){%>
+                           <td> <input type="text"   name="payment" value="Оплачено" readonly></td>
+                       <%  }
+                       %>
+
+                   <% })%>
+
+
+             </tr>
+
+
+                   </div>
+             </table>
+
+
+                               <%}%>
+
+    </div>
+    </div>
+<form class="DebtPay" action="/DebtPay" method="post">
+  <select class="example1" name="example1" id="name">
+  <% debtDetail.forEach(function(ar) {
+    if (ar.rest!=0){%>
+        <option value="<%=ar.id%>" ><%=ar.name%></option>
+      <%}
+    %>
+
+  <% })%>
+     </select>
+     <input type="text"   name="payment" >
+
+     <button type="btn"  type="submit">Pay</button>
+  </form>
+
+                <%  } else{  %> AAAA
+
+              <% } }if (title=="Debt"){%>
+
+                  <div class="form-debt">
+                  <form class="DebtMoney" action="/DebtMoney" method="post">
+                    <div class="name">
+                      <label for="nameByUser">  Название</label>
+                      <input type="text" name="example1" value="" required>
+                    </div>
+                    <div class="name">
+                  <label for="name">  Категория:</label>
+                    <select class="example1" name="example1" id="name" required>
+                      <option value="0" selected>Обязательно к заполнению</option>
+                       <option value="Ипотека">Ипотека</option>
+                       <option value="Потребительский кредит">Потребительский креди</option>
+                       <option value="Долг">Долг</option>
+                     </select>
+                     </div>
+                     <div class="period">
+                    <label for="period"> Период платежа:</label>
+                     <select class="example1" name="example1" id="period" required>
+                       <option value="0" selected>Обязательно к заполнению</option>
+                        <option value="Месяц">Месяц</option>
+                        <option value="Займ">Без периода/Займ</option>
+                      </select>
+                      </div>
+                      <div class="data">
+                      <label for="datedebt"> Дата</label>
+                      <input type="date" class="example1" id="datedebt" name="example1" required/>
+                        <script type="text/javascript" src="/js/dateDebt.js">  </script>
+                        </div>
+                        <div class="dateEnd">
+                        <label for="dateDebtEnd">Погасить к:</label>
+                        <input type="date" class="example1" id="dateDebtEnd" name="example1" required/>
+                          <script type="text/javascript" src="/js/dateDebt.js">  </script>
+                          </div>
+                          <div class="sumpay">
+                          <label for="pay">Сумма ежемесячного платежа:</label>
+                          <input class="example1"  name="example1" id="pay" value="" placeholder="Если ежемесячный платеж" />
+                          </div>
+                          <div class="sum">
+                          <label for="sumDebt">Сумма долга:</label>
+                          <input class="example1"  name="example1" id="sumDebt" value="" placeholder="Обязательно к заполнению" required/>
+                          </div>
+                  <button class="btn" type="submit">Send</button>
+              </form>
+              </div>
+              <%} if (title=="Tranzaction"){%>
+                <div class="Tranzaction">
+                  <form class="Tranzaction" action="/DateTranzaction" method="post">
+                      Показать по дате:   <input type="date" class="example1" id="datetranzaction" name="example1" />
+                       <script type="text/javascript" src="/js/dateTran.js">  </script>
+                      <button class="btnTranzaction" type="submit">V</button>
+                  </form>
+
+                <div class="tranzactionTable">
+                <table>
+                  <tr>
+                    <td>Категория</td> <td>Сумма</td> <td>Дата</td>
+                  </tr>
+
+                <%  tranzaction.forEach(function(ar) { %>
+                  <% ar.date = String(ar.date)     %>
+
+                    <tr>
+                      <td> <%=ar.category%></td>   <td> <%=ar.sum%></td>   <td> <%=ar.date.split(" ")[1]%> <%=ar.date.split(" ")[2]%> <%=ar.date.split(" ")[3]%></td>
+                     </tr>
+                  <% }) %>
+                  </table>
+                    Общая сумма:  <%=sumTranzaction%>
+                  </div>
+                  </div>
+                <%}  if (title=="Finance"){%>
+                  <p align="center"> Семейный счет: <%=cashFamily%>
+                  <div class="Finance">
+                      Доступно средств: <input type="text" name="" placeholder=" <%=balance%>" readonly>
+                      <p>
+                        <p>
+                      <form class="form-family-finance" action="/SendFamilyFinance" method="post">
+                        <label for="sumDebt">Сумма:</label>
+                        <input type="text" name="example" value="500">
+                        <p>
+                          <p>
+                          <button class="btn" type="submit">Отложить</button>
+                      </form><p>
+                        <p>
+                            Доступно средств: <input type="text" name="" placeholder="<%=cashFamily%>" readonly>
+                            <p>
+                              <p>
+                      <form class="form-family-finance-take" action="/TakeFamilyFinance" method="post">
+                        <label for="sumDebt">Сумма:</label>
+                        <input type="text" name="example1" value="500">
+                        <p>
+                          <p>
+                          <button class="btn" type="submit">Вывести</button>
+                      </form>
+                  </div>
+
+                <%} if (title=="FamilyTranzaction"){%>
+                <div class="FamilyTranzaction">
+                  <form class="Tranzaction" action="/TranzactionFamily" method="post">
+                  <select class="examples" name="example1">
+                     <option value="date">По дате</option>
+                     <option value="name">По имени</option>
+                     <option value="datename">По дате и имени</option>
+                   </select>  <button class="btnTranzactionFamily" type="submit">V</button> </p>
+                     </form>
+                  <%if (sortfamily == "date"){%>
+                    <form class="Tranzaction" action="/TranzactionFamilyDate" method="post">
+                        Показать по дате:   <input type="date" class="example1" id="datetranzactionFam" name="example1" />
+                         <script type="text/javascript" src="/js/dateFam.js">  </script>
+                          <button class="btnTranzaction" type="submit">V</button>
+                            </form>
+                    <%} else if (sortfamily=="name"){%>
+                      <form class="Tranzaction" action="/TranzactionFamilyName" method="post">
+                  <select class="examples" name="example1">
+                     <option value="admin"><%=name%></option>
+                     <option value="under"><%=underName%></option>
+                   </select>  <button class="btnTranzactionFamily" type="submit">V</button> </p>
+                 </form>
+
+                      <%} else if (sortfamily=="datename"){%>
+                        <form class="Tranzaction" action="/TranzactionFamilyDateName" method="post">
+                            Показать по дате:   <input type="date" class="example1" id="datetranzactionFam" name="example1" />
+                             <script type="text/javascript" src="/js/dateFam.js">  </script>
+
+                      <select class="examples" name="example1">
+                         <option value="admin"><%=name%></option>
+                         <option value="under"><%=underName%></option>
+                       </select>  <button class="btnTranzactionFamily" type="submit">V</button> </p>
+                      </form>
+
+                        <%}%>
+                <div class="tranzactionTableFamily">
+                <table>
+                  <tr>
+                    <td>Имя</td><td>Категория</td> <td>Сумма</td> <td>Дата</td>
+                  </tr>
+
+                <% tranzactionFamily.forEach(function(ar) { %>
+                  <% ar.date = String(ar.date) %>
+                    <tr>
+                    <td> <%=ar.name%></td>    <td> <%=ar.category%></td>   <td> <%=ar.sum%></td>   <td> <%=ar.date.split(" ")[1]%> <%=ar.date.split(" ")[2]%> <%=ar.date.split(" ")[3]%></td>
+                     </tr>
+                  <% })%>
+                  </table>
+                    Общая сумма:  <%=sumFamilyTranzaction%>
+                  </div>
+                </div>
+                  <%}
+            if (title=="DebtTranzaction") {%>
+              <div class="detbTranzaction">
+                <form class="DebtTranzaction" action="/ShowDebtTranzaction" method="post">
+                  <select class="example1" name="example1" id="name">
+                  <% debtDetail.forEach(function(ar) { %>
+                        <option value="<%=ar.id%>" ><%=ar.name%></option>
+                  <% })%>
+                     </select>
+                     <button type="submit" name="button">V</button>
+                </form>
+                  <div class="table">
+                    <table>
+                      <tr>
+                         <td>Сумма</td> <td>Дата</td>
+                      </tr>
+                      <%if (!tranzactionDebt){%>
+                        <%} else {%>
+                      <% tranzactionDebt.forEach(function(ar) {
+                            if (idsortDebt==ar.id_debt){
+                         %>
+                        <% ar.datepay = String(ar.datepay) %>
+                          <tr>
+                            <td> <%=ar.sum%></td>   <td> <%=ar.datepay.split(" ")[1]%> <%=ar.datepay.split(" ")[2]%> <%=ar.datepay.split(" ")[3]%></td>
+                           </tr>
+                        <% }
+                      })
+                    }%>
+                    </table>
+                  </div>
+
+              </div>
+              <%} %>
+
+
+      </div>
+      </div>
+      </div>
+  </body>
+</html>

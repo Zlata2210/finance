@@ -1,0 +1,76 @@
+body{
+}
+
+h2 {
+    position: fixed; right: 45%; top:0%;
+    font-size: 25px;
+}
+.form-log-in{
+  position: fixed; right: 45%;top:10%;
+}
+.content{
+  position: absolute;
+left: 250px;
+right: 250px;
+top: 0px;
+bottom: 0px;
+background: #FFFFFF;
+}
+.user{
+  border-color: #FFFFFF;
+  text-align: right;
+  font-size: 25px;
+  padding-right: 20px;
+  font-style: italic;
+}
+
+#btnFam {
+  display: inline-block;
+  position: relative;
+  background: #f2f6f8; /* Цвет фона */
+    border: 1px solid #7a7b7e; /* Параметры рамки */
+    width: 30px; /* Ширина кнопки */
+    height: 30px; /* Высота */
+    border-radius: 30px;
+
+}
+.user > .family >.form-log-in{
+  width: auto;
+  height: auto;
+  background-color: green;
+  position: fixed; 
+  font-size: 15px;
+}
+.current-balance{
+  height: 300px;
+  background-color: blue;
+}
+.qiwi{
+  height: 300px;
+  background-image: url('/img/qiwi.png');
+  background-repeat: no-repeat;
+}
+.qiwi  #btn {
+  display: inline-block;
+  position: relative;
+  background: #f2f6f8; /* Цвет фона */
+    border: 1px solid #7a7b7e; /* Параметры рамки */
+    width: 60px; /* Ширина кнопки */
+    height: 60px; /* Высота */
+    border-radius: 30px;
+
+}
+.qiwi #cash{
+  text-align: right;
+  font-size: 25px;
+  padding-top: 70px;
+  padding-right: 20px;
+  font-style: italic;
+
+}
+.qiwi a{
+  display: block;
+  height: 100%;
+  color: #666;
+  text-decoration: none;
+}

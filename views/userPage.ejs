@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+
+      <link href="/css/Diplom.css" type="text/css" rel="stylesheet">
+    <title></title>
+  </head>
+  <body>
+      <div class="content">
+        <div class="user">
+          <%=name%>
+          <div class="family">
+                  <% if (role == "admin") { %>
+
+                    <% if(!under_name){  }
+                    else{
+                      under_name.forEach(function(ar) { %>
+                      <a href="/userPage?id=<%=ar.id%>"> <%=ar.name%></a>
+                      <% })
+                    }%>
+                     <form method="post" action="/familyAdd" novalidate>
+                       <button id="btnFam" type="submit">+</button>
+                     </form>
+                    <%}%>
+
+          </div>
+        </div>
+          <div class="current-balance">
+
+                  <% if (role == "admin") { %>
+                    <div class="familyBalance">
+                      <div id="current-balance-family">
+                      <% if (!under_name) {} else{ %>
+                      Семейный счет:  <%= cashFam%>
+                        <%}%>
+                      </div>
+                    </div>
+                  <% }%>
+
+            Текущий баланс:  <%=cash %>
+          </div>
+            <div class="qiwi">
+
+                    <% if (btnvisible) {%>
+                    <form method="post" action="/QiwiAdd" novalidate>
+                      <button id="btn" type="submit">+</button>
+                    </form>
+                    <%} else {%>
+                    <a href="#"> <div id="cash">
+                    Текущий баланс:  <%= cashQiwi%>
+                  </div> </a>
+                    <%}%>
+            </div>
+      </div>
+  </body>
+</html>

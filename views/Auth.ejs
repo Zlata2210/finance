@@ -1,0 +1,105 @@
+<html>
+<head>
+    <title><%= title %></title>
+    <meta charset="utf-8" />
+    <link href="/css/Diplom1.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+  <%
+      if (title=="Авторизация") {
+
+      %>
+
+<div class="form-log-in">
+
+  <form method="post" action="/Auth" novalidate>
+  <div class="form-field <%= errors.email ? 'form-field-invalid' : '' %>">
+    <label for="email">Email</label>
+    <input class="input" id="email" name="email" type="email" value="<%= data.email %>" />
+    <% if (errors.email) { %>
+      <div class="error"><%= errors.email.msg %></div>
+    <% } %>
+  </div>
+  <div class="form-field <%= errors.password ? 'form-field-invalid' : '' %>">
+    <label for="password">Password</label>
+    <input class="input" id="password" name="password" type="password" value="<%= data.password %>" />
+    <% if (errors.password) { %>
+      <div class="error"><%= errors.password.msg %></div>
+    <% } %>
+  </div>
+  <div class="form-actions">
+    <input class="btn" type="submit" value="SEND">
+  </div>
+<%
+} else if(title == "Регистрация"){
+  %>
+  <div class="form-log-in">
+
+    <form method="post" action="/Registr" novalidate>
+      <div class="form-field <%= errors.name ? 'form-field-invalid' : '' %>">
+        <label for="name">Name</label>
+        <input class="input" id="name" name="name"  value="<%= data.name %>" />
+        <% if (errors.name) { %>
+          <div class="error"><%= errors.name.msg %></div>
+        <% } %>
+      </div>
+
+    <div class="form-field <%= errors.email ? 'form-field-invalid' : '' %>">
+      <label for="email">Email</label>
+      <input class="input" id="email" name="email" type="email" value="<%= data.email %>" />
+      <% if (errors.email) { %>
+        <div class="error" ><%= errors.email.msg %></div>
+      <% } %>
+    </div>
+    <div class="form-field <%= errors.password ? 'form-field-invalid' : '' %>">
+      <label for="password">Password</label>
+      <input class="input" id="password" name="password" type="password" value="<%= data.password %>" />
+      <% if (errors.password) { %>
+        <div class="error"><%= errors.password.msg %></div>
+      <% } %>
+    </div>
+    <div class="form-actions">
+      <button class="btn" type="submit">Send</button>
+    </div>
+
+    </div>
+
+</form>
+<%
+} else { %>
+  <div class="form-log-in">
+
+    <form method="post" action="/familyAdd" novalidate>
+      <div class="form-field <%= errors.name ? 'form-field-invalid' : '' %>">
+        <label for="name">Name</label>
+        <input class="input" id="name" name="name"  value="<%= data.name %>" />
+        <% if (errors.name) { %>
+          <div class="error"><%= errors.name.msg %></div>
+        <% } %>
+      </div>
+
+    <div class="form-field <%= errors.email ? 'form-field-invalid' : '' %>">
+      <label for="email">Email</label>
+      <input class="input" id="email" name="email" type="email" value="<%= data.email %>" />
+      <% if (errors.email) { %>
+        <div class="error" ><%= errors.email.msg %></div>
+      <% } %>
+    </div>
+    <div class="form-field <%= errors.password ? 'form-field-invalid' : '' %>">
+      <label for="password">Password</label>
+      <input class="input" id="password" name="password" type="password" value="<%= data.password %>" />
+      <% if (errors.password) { %>
+        <div class="error"><%= errors.password.msg %></div>
+      <% } %>
+    </div>
+    <div class="form-actions">
+      <button class="btn" type="submit">Send</button>
+    </div>
+
+    </div>
+
+</form>
+<%}
+%>
+</body>
+<html>
